@@ -1,4 +1,4 @@
-# 106 - Választási névjegyzék napi adatai
+# 106 - Választási névjegyzék napi adatai a 2022-es Magyar Országgyűlési Választásokon
 This repository contains daily data on the number of eligible voters in all Hungarian election districts. Detailed description in Hungarian and English below.
 
 # Magyarul
@@ -17,6 +17,9 @@ TBA
 
 ## Hogyan használhatom?
 
-TBA
+Az adat az Apache License 2.0 feltételei mellett használható. Felhasználás esetén a javasolt hivatkozás:
+```
+Kiss, Olivér. (2022). 106 - Választási névjegyzék napi adatai a 2022-es Magyar Országgyűlési Választásokon [Data file]. Retrieved from https://github.com/kiss-oliver/106 
+```
 
 # In English
