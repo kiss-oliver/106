@@ -5,7 +5,6 @@ name: Update data
 defaults:
   run:
     shell: /usr/bin/bash
-    working-directory: scripts
 
 # Controls when the workflow will run
 on:
