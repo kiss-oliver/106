@@ -22,3 +22,5 @@ jobs:
         run: |
           echo Hello
           date +"%T" >> time.txt
+          git add time.txt
+          git commit -m 'Commit by update data workflow'
