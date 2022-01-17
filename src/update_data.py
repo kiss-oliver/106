@@ -1,6 +1,7 @@
 import json
 import pandas as pd
 import requests as re
+import sys
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
@@ -12,9 +13,14 @@ except AttributeError:
     # no pyopenssl support used / needed / available
     pass
 
-
 # Get config json
 config = re.get('https://vtr.valasztas.hu/ogy2022/data/config.json').json()
+
+# Check if version is new
+versions = open('../data/versions.txt','r').read().split('\n')
+if config['ver'] in versions:
+    print('Version {} already collected. Exiting.'.format(config['ver']))
+    sys.exit()
 
 # Get Settlement data
 data = re.get('https://vtr.valasztas.hu/ogy2022/data/{}/ver/Telepulesek.json'.format(config['ver'])).json()
@@ -26,15 +32,15 @@ current['version'] = config['ver']
 
 # Append to existing data
 try:
-    past = pd.read_csv('telepules.csv')
-    pd.concat([past, current]).to_csv('telepules.csv', index=False)
+    past = pd.read_csv('../data/telepules.csv')
+    pd.concat([past, current]).to_csv('../data/telepules.csv', index=False)
 except FileNotFoundError:
-    current.to_csv('telepules.csv', index=False)
+    current.to_csv('../data/telepules.csv', index=False)
 
 # Get szavazokor data
 alldata = []
 szavazokorok = current[['maz','taz']].drop_duplicates(keep='first')
-for codes in tqdm(list(zip(szavazokorok.maz.astype(str).tolist(),szavazokorok.taz.astype(str).tolist())), "Scrape szk data"):
+for codes in tqdm(list(zip(szavazokorok.maz.astype(str).tolist(),szavazokorok.taz.astype(str).tolist())), "Collecting szavazokor data"):
     url = 'https://vtr.valasztas.hu/ogy2022/data/{}/ver/{}/Szavazokorok-{}-{}.json'.format(
            config['ver'],codes[0],codes[0],codes[1])
     data = re.get(url).json()
@@ -46,10 +52,10 @@ current['version'] = config['ver']
 
 # Append to existing data
 try:
-    past = pd.read_csv('szavazokor.csv')
-    pd.concat([past, current]).to_csv('szavazokor.csv', index=False)
+    past = pd.read_csv('../data/szavazokor.csv')
+    pd.concat([past, current]).to_csv('../data/szavazokor.csv', index=False)
 except FileNotFoundError:
-    current.to_csv('szavazokor.csv', index=False)
+    current.to_csv('../data/szavazokor.csv', index=False)
 
 # Get OEVK data
 data = re.get('https://vtr.valasztas.hu/ogy2022/data/{}/ver/OevkAdatok.json'.format(config['ver'])).json()
@@ -59,10 +65,10 @@ current['version'] = config['ver']
 
 # Append to existing data
 try:
-    past = pd.read_csv('oevk.csv')
-    pd.concat([past, current]).to_csv('oevk.csv', index=False)
+    past = pd.read_csv('../data/oevk.csv')
+    pd.concat([past, current]).to_csv('../data/oevk.csv', index=False)
 except FileNotFoundError:
-    current.to_csv('oevk.csv', index=False)
+    current.to_csv('../data/oevk.csv', index=False)
 
 
 # Get osszletszam
@@ -72,9 +78,9 @@ current['version'] = config['ver']
 
 # Append to existing data
 try:
-    past = pd.read_csv('summary.csv')
-    pd.concat([past, current]).to_csv('summary.csv', index=False)
+    past = pd.read_csv('../data/summary.csv')
+    pd.concat([past, current]).to_csv('../data/summary.csv', index=False)
 except FileNotFoundError:
-    current.to_csv('summary.csv', index=False)
+    current.to_csv('../data/summary.csv', index=False)
 
-
+open('../data/versions.txt','a').write(config['ver'])
