@@ -24,10 +24,14 @@ if config['ver'] in versions:
 
 # Get Settlement data
 data = re.get('https://vtr.valasztas.hu/ogy2022/data/{}/ver/Telepulesek.json'.format(config['ver'])).json()
-parsed = [[{y[0]:y[1] for y in x.items() if y[0] not in ['evk_lst','letszam']}|x['letszam']|{'evk':z}
-          for z in x['evk_lst']] for x in data['list']]
-compiled = [y for x in parsed for y in x]
-current = pd.DataFrame(compiled)
+parsed = []
+for x in data['list']:
+    for z in x['evk_lst']:
+        a = {y[0]:y[1] for y in x.items() if y[0] not in ['evk_lst','letszam']}
+        b = x['letszam']
+        c = {'evk':z}
+        parsed.append({**a, **b, **c})
+current = pd.DataFrame(parsed)
 current['version'] = config['ver']
 
 # Append to existing data
@@ -45,7 +49,10 @@ for codes in tqdm(list(zip(szavazokorok.maz.astype(str).tolist(),szavazokorok.ta
            config['ver'],codes[0],codes[0],codes[1])
     data = re.get(url).json()
     for szk in data['data']['szavazokorok']:
-        alldata.append({y[0]:y[1] for y in szk.items() if y[0] not in ['letszam']}|szk['letszam']|{'maz':codes[0],'taz':codes[1]})
+        a = {y[0]:y[1] for y in szk.items() if y[0] not in ['letszam']}
+        b = szk['letszam']
+        c = {'maz':codes[0],'taz':codes[1]}
+        alldata.append({**a, **b, **c})
 
 current = pd.DataFrame(alldata)
 current['version'] = config['ver']
@@ -59,7 +66,11 @@ except FileNotFoundError:
 
 # Get OEVK data
 data = re.get('https://vtr.valasztas.hu/ogy2022/data/{}/ver/OevkAdatok.json'.format(config['ver'])).json()
-parsed = [{y[0]:y[1] for y in x.items() if y[0] not in ['letszam']}|x['letszam'] for x in data['list']]
+parsed = []
+for x in data['list']:
+    a = {y[0]:y[1] for y in szk.items() if y[0] not in ['letszam']}
+    b = x['letszam']
+    parsed.append({**a, **b})
 current = pd.DataFrame(parsed)
 current['version'] = config['ver']
 
