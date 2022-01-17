@@ -26,5 +26,5 @@ jobs:
         run: |
           git config --global user.name 'Automated workflow'
           git config --global user.email 'kiss-oliver@users.noreply.github.com'
-          git commit -A "Update made by Action"
+          git commit -a "Update made by Action"
           git push
