@@ -4,7 +4,7 @@ name: Update data
 
 defaults:
   run:
-    shell: /usr/bin/bash
+    shell: /usr/bin/bash {0}
 
 # Controls when the workflow will run
 on:
