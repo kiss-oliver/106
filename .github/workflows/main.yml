@@ -17,15 +17,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Echo time
+      - name: Setup environment
+        run: pip3 install -r requirements.txt
+      - name: Update data
+        run: python3 src/update_data.py
+      - name: Commit changes
         run: |
-          echo Hello
-          date +"%T" >> time.txt
-      - name: Commit report
-        run: |
-          git config --global user.name 'Automated workflow'
+          git config --global user.name 'Automated workflow - Update data'
           git config --global user.email 'kiss-oliver@users.noreply.github.com'
           git add -A
-          git commit -m "Update made by Action"
+          git commit -m "Committed by Update data workflow."
           git push
