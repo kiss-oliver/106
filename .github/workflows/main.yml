@@ -20,7 +20,9 @@ jobs:
       - name: Setup environment
         run: pip3 install -r requirements.txt
       - name: Update data
-        run: python3 src/update_data.py
+        run: |
+          cd src
+          python3 update_data.py
       - name: Commit changes
         run: |
           git config --global user.name 'Automated workflow - Update data'
