@@ -94,4 +94,4 @@ try:
 except FileNotFoundError:
     current.to_csv('../data/summary.csv', index=False)
 
-open('../data/versions.txt','a').write(config['ver'])
+open('../data/versions.txt','a').write('\n'+config['ver'])
