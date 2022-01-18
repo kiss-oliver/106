@@ -68,7 +68,7 @@ except FileNotFoundError:
 data = re.get('https://vtr.valasztas.hu/ogy2022/data/{}/ver/OevkAdatok.json'.format(config['ver'])).json()
 parsed = []
 for x in data['list']:
-    a = {y[0]:y[1] for y in szk.items() if y[0] not in ['letszam']}
+    a = {y[0]:y[1] for y in data.items() if y[0] not in ['letszam']}
     b = x['letszam']
     parsed.append({**a, **b})
 current = pd.DataFrame(parsed)
