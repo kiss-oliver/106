@@ -5,7 +5,7 @@ This repository contains daily data on the number of eligible voters in all Hung
 
 ## Mit tartalmaz az adat?
 
-Ebben a repoban a 2022-es országgyűlési választásokon a névjegyzékben szereplők száma található meg szavazókör, OEVK és település szintjén. Az adat 2022.01.16-tól kezdve minden NVI által publikált verziót tartalmaz. Az adatokat egy automatizált workflow gyűjti be, ami 10 percenként ellenőrzi, hogy történt-e adatfrissités az NVI holnapján. Minden adat a `data` mappában található.
+Ebben a repoban a 2022-es országgyűlési választásokon a névjegyzékben szereplők száma található meg szavazókör, OEVK és település szintjén. Az adat 2022.01.16-tól kezdve minden NVI által publikált verziót tartalmaz. Az adatokat egy automatizált workflow gyűjti be, ami naponta négyszer ellenőrzi, hogy történt-e adatfrissités az NVI holnapján. Minden adat a `data` mappában található.
 
 ## Miért fontos ez?
 
